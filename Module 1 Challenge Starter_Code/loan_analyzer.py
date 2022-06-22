@@ -1,6 +1,6 @@
 # coding: utf-8
-import csv
-from pathlib import Path
+import csv #library for csv functions
+from pathlib import Path #calls Path function from Path library
 
 """Part 1: Automate the Calculations.
 
@@ -12,6 +12,7 @@ First, let's start with some calculations on a list of prices for 5 loans.
     3. Using the sum of all loans and the total number of loans, calculate the average loan price.
     4. Print all calculations with descriptive messages.
 """
+#sample loan costs list for challenge part 1
 loan_costs = [500, 600, 200, 1000, 450]
 
 # How many loans are in the list?
@@ -32,6 +33,7 @@ print(f"The total value of all loans is: ${total_loan_value:.2f}")
 # @TODO: Using the sum of all loans and the total number of loans, calculate the average loan price.
 # Print the average loan amount
 # YOUR CODE HERE!
+# average = total/number
 average_loan_value = total_loan_value/number_of_loans
 print(f"The average loan value is: ${average_loan_value:.2f}")
 
@@ -81,8 +83,8 @@ print(f"The remaining months on this loan is: {remaining_months}")
 #   HINT: Present Value = Future Value / (1 + Discount_Rate/12) ** remaining_months
 
 # YOUR CODE HERE!
-annual_discount_rate = 0.20
-fair_value = future_value/((1 + annual_discount_rate/12)**remaining_months)
+annual_discount_rate = 0.20 #annual discount rate of 20%
+fair_value = future_value/((1 + annual_discount_rate/12)**remaining_months) #fair value is the calculated present value of loan
 print(f"The fair value of this loan is: ${fair_value:.2f}")
 
 # If Present Value represents what the loan is really worth, does it make sense to buy the loan at its cost?
@@ -90,10 +92,10 @@ print(f"The fair value of this loan is: ${fair_value:.2f}")
 #    If the present value of the loan is greater than or equal to the cost, then print a message that says the loan is worth at least the cost to buy it.
 #    Else, the present value of the loan is less than the loan cost, then print a message that says that the loan is too expensive and not worth the price.
 # YOUR CODE HERE!
-loan_cost = loan.get("loan_price")
-if fair_value>=loan_cost:
+loan_cost = loan.get("loan_price") #loan cost is the price of the loan
+if fair_value>=loan_cost: #if calculated present/fair value of the loan is greater than the cost, then we would be making money
     print(f"The loan is worth at least the cost to buy it. Fair value is ${fair_value:.2f} and the loan cost is ${loan_cost:.2f}")
-else:
+else: #if calculated present/fair value of the loan is less than the cost, then we would be losing money
     print(f"The loan is too expensive and not worth the price. Fair value is ${fair_value:.2f} and the loan cost is ${loan_cost:.2f}")
 
 """Part 3: Perform Financial Calculations.
@@ -126,11 +128,11 @@ def calculate_present_value(future_value, remaining_months, annual_discount_rate
 # @TODO: Use the function to calculate the present value of the new loan given below.
 #    Use an `annual_discount_rate` of 0.2 for this new loan calculation.
 # YOUR CODE HERE!
-annual_discount_rate = 0.20
+annual_discount_rate = 0.20 #discount rate is 20%
 present_value = calculate_present_value(
     new_loan.get("future_value"),
     new_loan.get("remaining_months"),
-    annual_discount_rate)
+    annual_discount_rate) #calls present value calculation funciton above
 print(f"The present value of the new loan is: ${present_value:.2f}")
 
 
@@ -178,9 +180,9 @@ inexpensive_loans = []
 
 # @TODO: Loop through all the loans and append any that cost $500 or less to the `inexpensive_loans` list
 # YOUR CODE HERE!
-for loan in loans: 
-    if loan.get("loan_price")<=500: 
-        inexpensive_loans.append(loan)
+for loan in loans: #iterate through each loan in the loans list
+    if loan.get("loan_price")<=500: #check if the loan price is les than or equal to 500
+        inexpensive_loans.append(loan) #append to the list. No need for else function
 
 # @TODO: Print the `inexpensive_loans` list
 # YOUR CODE HERE!
@@ -209,8 +211,8 @@ output_path = Path("inexpensive_loans.csv")
 # @TODO: Use the csv library and `csv.writer` to write the header row
 # and each row of `loan.values()` from the `inexpensive_loans` list.
 # YOUR CODE HERE!
-with open(output_path, 'w', newline='') as csvfile:
-    csvwriter = csv.writer(csvfile)
-    csvwriter.writerow(header)
-    for loan in inexpensive_loans:
-        csvwriter.writerow(loan.values())
+with open(output_path, 'w', newline='') as csvfile:     #creates csv file
+    csvwriter = csv.writer(csvfile)                     #creates writeable csv file object
+    csvwriter.writerow(header)                          #writes header row first
+    for loan in inexpensive_loans:                      #iterates through each loan in list
+        csvwriter.writerow(loan.values())               #writes each loan as a row in csvfile
